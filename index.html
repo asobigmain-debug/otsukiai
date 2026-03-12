@@ -521,10 +521,18 @@ if ('serviceWorker' in navigator) {
 }
 
 // ========== 起動 ==========
-openDB().then(async ()=>{
-  DB = await dbGetAll();
+async function init() {
+  try {
+    await openDB();
+    DB = await dbGetAll();
+  } catch(e) {
+    console.error('DB error:', e);
+    DB = {};
+  }
+  showView('cover');
   buildCover();
-});
+}
+init();
 </script>
 </body>
 </html>
